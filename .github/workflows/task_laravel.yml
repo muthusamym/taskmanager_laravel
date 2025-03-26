@@ -1,0 +1,17 @@
+name: Laravel CI/CD
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+      - name: Install Dependencies
+        run: composer install
+      - name: Run Migrations
+        run: php artisan migrate --env=testing --force
+      - name: Run Tests
+        run: php artisan test
